@@ -14,6 +14,14 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)
+  },
+  {
+    path: 'notes-editor',
+    loadChildren: () => import('./notes-editor/notes-editor.module').then(mod => mod.NotesEditorModule)
   }
 ];
 
