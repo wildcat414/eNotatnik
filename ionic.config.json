@@ -1,5 +1,7 @@
 {
   "name": "eNotatnik",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
