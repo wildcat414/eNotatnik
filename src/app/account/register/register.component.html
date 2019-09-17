@@ -1,3 +1,26 @@
-<p>
-  register works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Rejestracja
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Login</ion-label>
+    <ion-input [(ngModel)]="userToRegister.login"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Hasło</ion-label>
+    <ion-input [(ngModel)]="userToRegister.password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>E-mail</ion-label>
+    <ion-input [(ngModel)]="userToRegister.email"></ion-input>
+  </ion-item>
+  <ion-button (click)="doRegister()">Zarejestruj się</ion-button>
+</ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HistoryLog } from 'src/app/models/history-log';
 
 @Component({
   selector: 'app-history',
@@ -7,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  items: HistoryLog[] = [];
+
+  constructor() {
+    for (let i = 1; i < 11; i++) {
+      this.items.push({
+        id: i,
+        login: "a",
+        editedAt: 0,
+        charDiff: 10
+      });
+    }
+  }
 
   ngOnInit() {}
 

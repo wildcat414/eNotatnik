@@ -22,8 +22,28 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Registration',
+      title: 'Rejestracja',
       url: '/account/register',
+      icon: 'list'
+    },
+    {
+      title: 'Zaloguj się',
+      url: '/account/login',
+      icon: 'list'
+    },
+    {
+      title: 'Notatnik',
+      url: '/notes-editor/editor',
+      icon: 'list'
+    },
+    {
+      title: 'Historia',
+      url: '/notes-editor/history',
+      icon: 'list'
+    },
+    {
+      title: 'Wyloguj się',
+      url: '/account/logout',
       icon: 'list'
     }
   ];
@@ -33,13 +53,14 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
-    this.initializeApp();
+    this.initializeApp();    
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
     });
   }
 }

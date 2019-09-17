@@ -24,8 +24,12 @@ export class DeviceStorageService {
     });
   }
 
-  initDatabase() {
+  initDatabaseUsers() {
     return this.executeQuery('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, email TEXT, registeredAt INTEGER, lastSeen INTEGER, token TEXT);', []);
+  }
+
+  initDatabaseHistory() {
+    return this.executeQuery('CREATE TABLE IF NOT EXISTS history_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, editedAt INTEGER, charDiff INTEGER);', []);
   }
 
   saveThemePreference(themeName: string) {
