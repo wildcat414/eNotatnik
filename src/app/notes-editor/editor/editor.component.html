@@ -11,7 +11,8 @@
 
 <ion-content>
   <ion-item>
-    <ion-textarea rows="10" cols="20" placeholder="Wpisz tutaj treść notatki..."></ion-textarea>
+    <ion-textarea rows="10" cols="20" placeholder="Wpisz tutaj treść notatki..." [(ngModel)]="notesContent"></ion-textarea>
   </ion-item>
-  <ion-button>Zapisz zmiany</ion-button>
+  <ion-button (click)="doSaveNotes()">Zapisz zmiany</ion-button>
+  <p>Previous edit: {{ previousEdit | date: 'yyyy-LL-dd HH:mm:ss' }}</p>
 </ion-content>

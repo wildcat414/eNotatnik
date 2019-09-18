@@ -15,37 +15,38 @@ export class RestConnectService {
   constructor(private http: Http) { }
 
   registerUser(loginPar: string, passwordPar: string, emailPar: string): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.masterToken  });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.masterToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST registerUser");
-    return this.http.post(this.baseRestApiUrl + '/register-user.php', JSON.stringify({ login: loginPar, password: passwordPar, email: emailPar }), options).pipe(
+    return this.http.post(this.baseRestApiUrl + '/user-registration.php', JSON.stringify({ login: loginPar, password: passwordPar, email: emailPar }), options).pipe(
       timeout(SharedGlobals.defaultTimeout),
 			map((res: Response) => res.json()),
       catchError(this.handleError));
   }
 
   authorizeUser(loginPar: string, passwordPar: string): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.masterToken  });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.masterToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST authorizeUser");
-    return this.http.post(this.baseRestApiUrl + '/authorize-user.php', JSON.stringify({ login: loginPar, password: passwordPar }), options).pipe(
+    return this.http.post(this.baseRestApiUrl + '/user-authorization.php', JSON.stringify({ login: loginPar, password: passwordPar }), options).pipe(
       timeout(SharedGlobals.defaultTimeout),
 			map((res: Response) => res.json()),
       catchError(this.handleError));
   }
 
   remindPassword(loginPar: string): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.masterToken  });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.masterToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST remindPassword");
-    return this.http.post(this.baseRestApiUrl + '/remind-password.php', JSON.stringify({ login: loginPar }), options).pipe(
+    return this.http.post(this.baseRestApiUrl + '/password-remind.php', JSON.stringify({ login: loginPar }), options).pipe(
       timeout(SharedGlobals.defaultTimeout),
 			map((res: Response) => res.json()),
       catchError(this.handleError));
   }
 
   getNote(): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.userToken  });
+    console.log(SharedGlobals.userToken);
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.userToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST getNote");
     return this.http.get(this.baseRestApiUrl + '/get-note.php', options).pipe(
@@ -55,7 +56,7 @@ export class RestConnectService {
   }
 
   updateNote(contentPar: string): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.userToken  });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.userToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST updateNote");
     return this.http.put(this.baseRestApiUrl + '/update-note.php', JSON.stringify({ noteContent: contentPar }), options).pipe(
@@ -65,7 +66,7 @@ export class RestConnectService {
   }
 
   getNoteHistory(): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': SharedGlobals.userToken  });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Authorization-Token': SharedGlobals.userToken  });
     let options = new RequestOptions({ headers: headers });
     console.log("REST getNoteHistory");
     return this.http.get(this.baseRestApiUrl + '/get-note-history.php', options).pipe(

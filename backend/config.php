@@ -5,9 +5,9 @@ $password = "eTzSGUgArsrU";
 $dbname = "barth1_enotatnik";
 
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Content-type: application/json;');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Authorization-Token");
+header('Content-Type: application/json;');
 
 function generateRandomSequence() {
     $seq = "";

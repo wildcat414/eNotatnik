@@ -18,7 +18,21 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     )";
     
 if ($conn->query($sql) === TRUE) {
-    echo "Table Users created successfully\n";
+    echo "Table users created successfully\n";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
+
+// sql to create table
+$sql = "CREATE TABLE IF NOT EXISTS notes (
+    userId INT(6) UNSIGNED PRIMARY KEY,
+    content TEXT NOT NULL,
+    editedAt INT(10) UNSIGNED NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id)
+    )";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Table notes created successfully\n";
 } else {
     echo "Error creating table: " . $conn->error;
 }
@@ -26,9 +40,10 @@ if ($conn->query($sql) === TRUE) {
 // sql to create table
 $sql = "CREATE TABLE IF NOT EXISTS history_logs (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-    login TINYTEXT NOT NULL,
+    userId INT(6) UNSIGNED NOT NULL,
     editedAt INT(10) UNSIGNED NOT NULL,
-    charDiff INT(6) UNSIGNED NOT NULL
+    charDiff INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id)
     )";
 
 if ($conn->query($sql) === TRUE) {

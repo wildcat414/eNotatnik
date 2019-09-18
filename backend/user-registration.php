@@ -16,17 +16,19 @@ $userDataArr = json_decode($userData, true);
 $email = $userDataArr['email'];
 $login = $userDataArr['login'];
 $password = $userDataArr['password'];
-$today = time();
+$today = (string) time();
+$dbstatus = FALSE;
 
-$query = 'INSERT INTO Users(id, login, password, email, registeredAt, token) VALUES (\'\', \''. $login .'\', \''. $password .'\', \''. $email .'\', '. $today .', NULL)';
-
-$result = $conn->query($query);
-$conn->close();
-
-if($result != FALSE) {
-    $dbstatus = TRUE;
+if(strlen($login) > 0 && strlen($password) > 0 && strlen($email) > 0) {
+    $query = 'INSERT INTO users(id, login, password, email, registeredAt, token) VALUES (\'\', \''. $login .'\', \''. $password .'\', \''. $email .'\', \''. $today .'\', NULL);';
+    $result = $conn->query($query);
+    if($result != FALSE) {
+        $dbstatus = TRUE;
+        $result->free();
+    }
+    $conn->close();
 } else {
-    $dbstatus = FALSE;
+    $result = FALSE;
 }
 
 if($dbstatus == TRUE) {

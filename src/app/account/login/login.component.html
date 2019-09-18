@@ -12,12 +12,12 @@
 <ion-content>
   <ion-item>
     <ion-label>Login</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="user.login"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Hasło</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="user.password"></ion-input>
   </ion-item>
-  <ion-button>Zaloguj się</ion-button>
+  <ion-button (click)="doLogin()">Zaloguj się</ion-button>
   <ion-button>Nie pamiętam hasła</ion-button>
 </ion-content>

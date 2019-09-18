@@ -35,5 +35,5 @@ if(isset($array)) {
     $return_arr["result"] = null;
 }
 
-echo json_encode($return_arr, JSON_UNESCAPED_UNICODE );
+echo json_encode($return_arr, JSON_UNESCAPED_UNICODE);
 ?>

@@ -17,13 +17,12 @@ $inputDataArr = json_decode($inputData, true);
 $login = $inputDataArr['login'];
 $password = $inputDataArr['password'];
 
-$query = "SELECT * FROM Users WHERE login = '$login' AND password = '$password' AND active = 1";
+$query = "SELECT * FROM users WHERE login = '$login' AND password = '$password'";
 $result = $conn->query($query);
 
 $rows = $result->num_rows;
 $tempArr = $result->fetch_array(MYSQLI_ASSOC);
 $resultArray["userId"] = $tempArr["id"];
-$resultArray["reference"] = $tempArr["reference"];
 
 $result->free();
 
@@ -31,7 +30,7 @@ if($rows > 0) {
     $dbstatus = TRUE;
     $resultArray["userToken"] = generateRandomSequence();
     $tempToken = $resultArray["userToken"];
-    $query = "UPDATE Users SET token = '$tempToken' WHERE login = '$login'";
+    $query = "UPDATE users SET token = '$tempToken' WHERE login = '$login'";
     $result = $conn->query($query);
 } else {
     $dbstatus = FALSE;

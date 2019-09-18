@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { NotesEditorRoutingModule } from './notes-editor-routing.module';
 import { EditorComponent } from './editor/editor.component';
@@ -14,7 +15,8 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     CommonModule,
     NotesEditorRoutingModule,
-    IonicModule
+    IonicModule,
+    FormsModule
   ]
 })
 export class NotesEditorModule { }
