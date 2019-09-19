@@ -26,16 +26,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         $inputData = file_get_contents('php://input');
         $inputDataArr = json_decode($inputData, true);
 
+        $newContentLength = strlen($inputDataArr['noteContent']);
         $content = base64_encode($inputDataArr['noteContent']);
         $time = (string) time();
 
         $query = "SELECT * FROM notes WHERE userId = '$userId'";
         $result = $conn->query($query);
         $notesPresent = $result->num_rows;
+        if($notesPresent == 1) {
+            $tempArr = $result->fetch_array(MYSQLI_ASSOC);
+            $oldContentLength = strlen(base64_decode($tempArr["content"]));
+            $diff = $newContentLength - $oldContentLength;            
+        } else {
+            $diff = $newContentLength;
+        }
         $result->free();
 
         if($notesPresent == 1) {
-            $query = "UPDATE notes SET content = '$content', editedAt = '$time' WHERE userId = '$userId';";
+            $query = "UPDATE notes SET content = '$content', editedAt = '$time' WHERE userId = '$userId';";            
         } else {
             $query = "INSERT INTO notes(userId, content, editedAt) VALUES ('$userId', '$content', '$time');";
         }
@@ -47,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $return_arr["status"] = "ok";
             $return_arr["details"] = "Notes content has been successfully updated.";
             $return_arr["result"] = NULL;
+            $query2 = "INSERT INTO history_logs(id, userId, editedAt, charDiff) VALUES ('', '$userId', '$time', '$diff');";
+            $result2 = $conn->query($query2);
         } else {
             $dbstatus = FALSE;
             $return_arr["status"] = "error";

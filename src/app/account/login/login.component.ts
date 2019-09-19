@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
           handler: (ev) => {
             if(actionSuccess) {
               SharedGlobals.userToken = this.user.token;
+              SharedGlobals.userIsLoggedIn = true;
               this.router.navigate(['/notes-editor/editor']);
             }            
           }

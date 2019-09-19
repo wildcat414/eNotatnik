@@ -5,7 +5,6 @@ export class User {
     public password: string;
     public email: string;
     public registeredAt: number;
-    public lastSeen: number;
     public token: string;
 
     constructor() {

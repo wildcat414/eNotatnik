@@ -25,11 +25,27 @@ export class DeviceStorageService {
   }
 
   initDatabaseUsers() {
-    return this.executeQuery('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, email TEXT, registeredAt INTEGER, lastSeen INTEGER, token TEXT);', []);
+    return this.executeQuery('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, email TEXT, registeredAt INTEGER, token TEXT);', []);
   }
 
   initDatabaseHistory() {
     return this.executeQuery('CREATE TABLE IF NOT EXISTS history_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, editedAt INTEGER, charDiff INTEGER);', []);
+  }
+
+  initDatabaseNotes() {
+    return this.executeQuery('CREATE TABLE IF NOT EXISTS notes (userId INTEGER PRIMARY KEY, content TEXT, editedAt INTEGER);', []);
+  }
+
+  addNote(userId: number, content: string, editedAt: number) {
+    return this.executeQuery('INSERT INTO notes(userId, content, editedAt) VALUES (?, ?, ?);', [userId, content, editedAt]);
+  }
+
+  updateNote(userId: number, content: string, editedAt: number) {
+    return this.executeQuery('UPDATE notes SET content = ?, editedAt = ? WHERE userId = ?', [content, editedAt, userId]);
+  }
+
+  getNote(userId) {
+    return this.executeQuery('SELECT * FROM notes WHERE userId = ?', [userId]);
   }
 
   saveThemePreference(themeName: string) {

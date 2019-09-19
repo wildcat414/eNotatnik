@@ -28,7 +28,7 @@ export class EditorComponent implements OnInit {
         if(data.result.editedAt != null) {
           this.previousEdit = data.result.editedAt.toString() + "000";
         } else {
-          this.previousEdit = "(never)";
+          this.previousEdit = "";
         }
         
       }
@@ -39,7 +39,7 @@ export class EditorComponent implements OnInit {
     this.restConnectService.updateNote(this.notesContent).subscribe(data => {
       console.log(data);
       if(data.status == "ok") {
-        this.previousEdit = new Date().getTime().toString() + "000";
+        this.previousEdit = new Date().getTime().toString();
       }
     })
   }

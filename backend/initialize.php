@@ -42,7 +42,7 @@ $sql = "CREATE TABLE IF NOT EXISTS history_logs (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
     userId INT(6) UNSIGNED NOT NULL,
     editedAt INT(10) UNSIGNED NOT NULL,
-    charDiff INT(6) UNSIGNED NOT NULL,
+    charDiff INT(6) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(id)
     )";
 

@@ -16,31 +16,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $headers = apache_request_headers();
     $userToken = $headers['X-Authorization-Token'];
 
-
     $query = "SELECT * FROM users WHERE token = '$userToken'";
     $result = $conn->query($query);
     $users = $result->num_rows;
+    $tempArr = $result->fetch_array(MYSQLI_ASSOC);
+    $userId = $tempArr["id"];
     $result->free();
 
     if($users == 1) {
-        $query = "SELECT * FROM notes n JOIN users u ON n.userId = u.id WHERE u.token = '$userToken';";
+        $array = array();
+        $query = "SELECT * FROM history_logs WHERE userId = '$userId' ORDER BY editedAt DESC;";
         $result = $conn->query($query);
         $rows = $result->num_rows;
-        if($rows == 1) {
-            $row = $result->fetch_array(MYSQLI_ASSOC);
-            $content = base64_decode($row['content']);
-            $editedAt = $row['editedAt'];
+        $i = 0;
+        if($rows >= 1) {
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                $array[$i] = $row;
+                $i++;
+            }            
             $result->free();
-        } else {
-            $content = "";
-            $editedAt = NULL;
         }
 
-        $array["content"] = $content;
-        $array["editedAt"] = $editedAt;
-
         $return_arr["status"] = "ok";
-        $return_arr["details"] = "Notes content has been successfully acquired from database.";
+        $return_arr["details"] = "Note history has been successfully acquired from database.";
         $return_arr["result"] = $array;
     } else {
         $return_arr["status"] = "error";

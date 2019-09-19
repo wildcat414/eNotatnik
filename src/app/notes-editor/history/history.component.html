@@ -11,17 +11,23 @@
 
 <ion-content>
   <ion-list>
+    <ion-item>
+      <div slot="start">
+
+      </div>
+      <div>
+        Data edycji
+      </div>
+      <div slot="end">
+        Różnica
+      </div>
+    </ion-item>
     <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.editedAt}}
+      <ion-icon [name]="'paper-plane'" slot="start"></ion-icon>
+      {{ item.editedAt | date: 'yyyy-LL-dd HH:mm:ss' }}
       <div class="item-note" slot="end">
-        {{item.charDiff}}
+        {{ item.charDiff >= 0 ? '+' + item.charDiff.toString() : item.charDiff.toString() }}
       </div>
     </ion-item>
   </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
 </ion-content>
