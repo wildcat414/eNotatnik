@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { AppPreferences } from '@ionic-native/app-preferences/ngx';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class DeviceStorageService {
       })
       .then((db: SQLiteObject) => {
         db.executeSql(query, params)
-          .then(result => { console.log('Executed SQL'); resolve(result); })
+          .then(result => { console.log('Executed SQL'); console.log(query); console.log(params); resolve(result); })
           .catch(error => { console.log(error); reject(error); });
       })
       .catch(error => { console.log(error); reject(error); });
@@ -44,8 +45,32 @@ export class DeviceStorageService {
     return this.executeQuery('UPDATE notes SET content = ?, editedAt = ? WHERE userId = ?', [content, editedAt, userId]);
   }
 
-  getNote(userId) {
+  getNote(userId: number) {
     return this.executeQuery('SELECT * FROM notes WHERE userId = ?', [userId]);
+  }
+
+  deleteNote(userId: number) {
+    return this.executeQuery('DELETE FROM notes WHERE userId = ?', [userId]);
+  }
+
+  addUser(user: User) {
+    return this.executeQuery('INSERT INTO users(id, login, password, email, registeredAt, token) VALUES (?, ?, ?, ?, ?, ?)', [user.id, user.login, user.password, user.email, user.registeredAt, user.token]);
+  }
+
+  updateUser(user: User) {
+    return this.executeQuery('UPDATE users SET login = ?, password = ?, email = ?, registeredAt = ?, token = ? WHERE id = ?', [user.login, user.password, user.email, user.registeredAt, user.token, user.id]);
+  }
+
+  getUser(userId: number) {
+    return this.executeQuery('SELECT * FROM users WHERE id = ?', [userId]);
+  }
+
+  getLastUser() {
+    return this.executeQuery('SELECT * FROM users ORDER BY id DESC LIMIT 1', []);
+  }
+
+  deleteUser(userId: number) {
+    return this.executeQuery('DELETE FROM users WHERE id = ?', [userId]);
   }
 
   saveThemePreference(themeName: string) {

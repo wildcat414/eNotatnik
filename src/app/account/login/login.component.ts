@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { RestConnectService } from 'src/app/services/rest-connect.service';
+import { DeviceStorageService } from 'src/app/services/device-storage.service';
 import { User } from 'src/app/models/user';
 import { SharedGlobals } from 'src/app/sharedGlobals';
 
@@ -13,9 +14,15 @@ import { SharedGlobals } from 'src/app/sharedGlobals';
 })
 export class LoginComponent implements OnInit {
 
-  user: User = new User();  
+  user: User = new User();
+  stayLoggedIn: boolean = false;
 
-  constructor(public alertController: AlertController, private restConnectService: RestConnectService, private router: Router) { }
+  constructor(
+    public alertController: AlertController,
+    private restConnectService: RestConnectService,
+    private router: Router,
+    private deviceStorageService: DeviceStorageService
+    ) { }
 
   ngOnInit() {}
 
@@ -43,6 +50,11 @@ export class LoginComponent implements OnInit {
             if(actionSuccess) {
               SharedGlobals.userToken = this.user.token;
               SharedGlobals.userIsLoggedIn = true;
+              SharedGlobals.userId = this.user.id;
+              if(this.stayLoggedIn) {
+                this.deviceStorageService.addUser(this.user);
+                this.deviceStorageService.saveStayLoggedInPreference(true);
+              }
               this.router.navigate(['/notes-editor/editor']);
             }            
           }

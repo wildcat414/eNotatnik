@@ -18,6 +18,11 @@
     <ion-label>Hasło</ion-label>
     <ion-input [(ngModel)]="user.password"></ion-input>
   </ion-item>
-  <ion-button (click)="doLogin()">Zaloguj się</ion-button>
-  <!-- <ion-button>Nie pamiętam hasła</ion-button> -->
+  <ion-item>
+    <ion-button (click)="doLogin()">Zaloguj się</ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-label>Pamiętaj mnie</ion-label>
+    <ion-checkbox [(ngModel)]="stayLoggedIn"></ion-checkbox>
+  </ion-item>  
 </ion-content>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Toast } from '@ionic-native/toast/ngx';
 
 import { SharedGlobals } from 'src/app/sharedGlobals';
+import { DeviceStorageService } from 'src/app/services/device-storage.service';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
@@ -10,10 +11,13 @@ import { SharedGlobals } from 'src/app/sharedGlobals';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private router: Router, private toast: Toast) { }
+  constructor(private router: Router, private toast: Toast, private deviceStorageService: DeviceStorageService) { }
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.deviceStorageService.deleteUser(SharedGlobals.userId);
+    this.deviceStorageService.saveStayLoggedInPreference(false);
     SharedGlobals.userToken = "";
+    SharedGlobals.userId = null;
     SharedGlobals.userIsLoggedIn = false;
 
     this.toast.show('Użytkownik został wylogowany poprawnie!', '5000', 'center').subscribe(

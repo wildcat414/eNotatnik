@@ -5,4 +5,5 @@ export class SharedGlobals
   public static defaultTimeout: number = 10000;
   public static longTimeout: number = 60000;
   public static userIsLoggedIn: boolean = false;
+  public static userId: number = null;
 }

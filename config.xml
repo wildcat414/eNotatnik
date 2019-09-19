@@ -49,6 +49,6 @@
     <plugin name="cordova-plugin-ionic-keyboard" />
     <plugin name="cordova-sqlite-storage" spec="^3.3.0" />
     <plugin name="cordova-plugin-app-preferences" spec="^0.99.3" />
-    <engine name="android" spec="^6.4.0" />
     <plugin name="cordova-plugin-x-toast" spec="^2.7.2" />
+    <engine name="android" spec="^6.4.0" />
 </widget>

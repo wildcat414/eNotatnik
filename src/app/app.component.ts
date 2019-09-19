@@ -80,7 +80,20 @@ export class AppComponent {
 
   intervalAction() {
     if(this.userIsLoggedIn != SharedGlobals.userIsLoggedIn || this.firstRun) {
-      this.firstRun = false;
+      if(this.firstRun) {
+        this.firstRun = false;
+        var stayLogged: boolean = false;
+        this.deviceStorageService.getStayLoggedPreference().then(data => {
+          stayLogged = data;
+          if(stayLogged == true) {
+            this.deviceStorageService.getLastUser().then((dbuser:any) => {
+              SharedGlobals.userId = dbuser.rows.item(0).id;
+              SharedGlobals.userIsLoggedIn = true;
+              SharedGlobals.userToken = dbuser.rows.item(0).token;
+            });
+          }
+        });
+      }      
       this.refreshMenu();
     }
   }
